@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">BTK Akademi</h1>
+    <p>
+		<!-- Statik olarak yönlendirme -->
+        @* <a class="btn btn-primary" href="/course/apply">Apply</a> *@
+		
+		<!-- Dinamik olarak yönlendirme -->
+        <a class="btn btn-primary" asp-controller="Course" asp-action="Apply">Apply</a>
+    </p>
+</div>

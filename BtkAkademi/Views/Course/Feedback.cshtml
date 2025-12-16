@@ -1,0 +1,21 @@
+@model Candidate
+
+@* 
+	Action'ı olmadan görüntülenen bir view
+*@
+
+<div>
+	<h3 class="display-4">@Model.FullName Tebrikler!</h3>
+	<p class="lead">Başvurunuz <mark>kabul</mark> edildi.</p>
+	<p class="lead">İlginizden dolayı teşekkürler :)</p>
+	<hr>
+	<blockquote class="blockquote">
+		@Model.SelectedCourse kursuna kaydolmuş bulunmaktasınız.
+	</blockquote>
+	<p class="text-muted">@Model.ApplyAt tarihinde başvurunuzu yaptınız</p>
+
+	<div class="btn-group">
+		<a class="btn btn-outline-success" asp-action="Index">Applications</a>
+		<a class="btn btn-success" asp-controller="Home" asp-action="Index">Home</a>
+	</div>
+</div>
