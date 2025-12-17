@@ -16,9 +16,9 @@ public class RepositoryContext : DbContext
 	{
 		base.OnModelCreating(modelBuilder);
 
-		// Model inşa edilirken model üzerinde veri yoksa aşağıdaki verileri ekler,
+		// * Model inşa edilirken model üzerinde veri yoksa aşağıdaki verileri ekler,
 		// eğer veri varsa eklemez.
-		// bu yazıldıktan sonra tekrar migration atılması gerekir.
+		// * Bu yazıldıktan sonra tekrar migration atılması gerekir.
 		modelBuilder.Entity<Product>()
 			.HasData(
 				new Product()
