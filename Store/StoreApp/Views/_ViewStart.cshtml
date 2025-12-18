@@ -1,0 +1,23 @@
+@{
+	Layout = "_Layout";
+}
+
+<!--
+	* Bu dosya, View'lar çalıştırılmadan önce ilk okunan dosyadır.
+	Amaç: Tüm View'lar için ortak ayarları tek bir yerden yapmak.
+
+	* Layout = "_Layout";
+	=> Tüm View'ların varsayılan olarak _Layout.cshtml dosyasını kullanacağını belirtir.
+	Böylece her View içinde ayrı ayrı Layout tanımlamaya gerek kalmaz.
+
+	* Views klasörü altındaki tüm .cshtml dosyaları,
+	aksi belirtilmedikçe bu layout'u kullanır.
+		- Aksi durum için örnek : Mesele Get.cshtml yukarıdaki Layout'u kullanmak istemiyorsa
+		kendi dosyası üzerinde bunu tanımlayabilir.
+		
+			```
+			@* @{
+					Layout = null;
+				} *@
+			```
+-->
