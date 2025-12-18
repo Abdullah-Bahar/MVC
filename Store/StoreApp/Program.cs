@@ -17,6 +17,9 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
 
 var app = builder.Build();
 
+// Uygulama static dosyalarda kullanacak. (wwwroot altındakiler)
+app.UseStaticFiles();
+
 // Rederiction mekanizması eklendi
 app.UseHttpsRedirection();
 
