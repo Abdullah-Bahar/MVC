@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Repositories;
+using Repositories.Contracts;
 using Repositories.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,9 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
 	// StoreApp projesi içerisinde oluşturulur. 
 	b => b.MigrationsAssembly("StoreApp"));
 });
+
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
