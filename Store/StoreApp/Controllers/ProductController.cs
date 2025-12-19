@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Entities.Models;
 using StoreApp.Models;
 
 namespace StoreApp.Controllers;
