@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using StoreApp.Models;
+using Repositories.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,13 @@ builder.Services.AddControllersWithViews(); // Controller + View => Servis Kayd�
 // DbContext'in servis kaydı yapıldı
 builder.Services.AddDbContext<RepositoryContext>(options =>
 {
-	options.UseSqlite(builder.Configuration.GetConnectionString("sqlconnection"));
+	// appsettings.json içinden gelen connection string
+	options.UseSqlite(builder.Configuration.GetConnectionString("sqlconnection"),
+
+	// * EFCore default olarak migration klasörünü DBContext'in olduğu yerde açar.
+	// * Aşağıdaki configuration ile Migration/ klasörü DbContext'in olduğu yer yerine 
+	// StoreApp projesi içerisinde oluşturulur. 
+	b => b.MigrationsAssembly("StoreApp"));
 });
 
 var app = builder.Build();
