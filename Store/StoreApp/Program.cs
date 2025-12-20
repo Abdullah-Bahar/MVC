@@ -23,8 +23,10 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
 	b => b.MigrationsAssembly("StoreApp"));
 });
 
+// IoC kayıtları yapılıyor
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 

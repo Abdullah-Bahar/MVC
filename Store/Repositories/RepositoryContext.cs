@@ -8,10 +8,10 @@ public class RepositoryContext : DbContext
 	public RepositoryContext(DbContextOptions<RepositoryContext> options)
 		: base(options)
 	{
-
 	}
 
 	public DbSet<Product> Products { get; set; }
+	public DbSet<Category> Categories { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -52,6 +52,12 @@ public class RepositoryContext : DbContext
 					ProductName = "Deck",
 					Price = 2_000
 				}
+			);
+
+		modelBuilder.Entity<Category>()
+			.HasData(
+				new Category() { CategoryId = 1, CategoryName = "Book" },
+				new Category() { CategoryId = 2, CategoryName = "Electronic" }
 			);
 	}
 }
