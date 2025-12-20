@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Entities.Models;
-using Repositories.Contracts;
+using Services.Contracts;
 
 namespace StoreApp.Controllers;
 
 public class ProductController : Controller
 {
-	private readonly IRepositoryManager _manager;
+	private readonly IServiceManager _manager;
 
-	public ProductController(IRepositoryManager manager)
+	public ProductController(IServiceManager manager)
 	{
 		_manager = manager;
 	}
@@ -16,15 +15,15 @@ public class ProductController : Controller
 
 	public IActionResult Index()
 	{
-		var model = _manager.Product.GetAllProducts(false).ToList();
-		// var model = _manager.Product.FindAll(false).ToList();
+		var model = _manager.PorductService.GetAllProducts(false).ToList();
 
 		return View(model);
 	}
 
+	// public IActionResult Get([FromForm(Name = "id")] int id)
 	public IActionResult Get(int id)
 	{
-		var model = _manager.Product.GetOneProduct(id, false);
+		var model = _manager.PorductService.GetOneProduct(id, false);
 
 		return View(model);
 	}
