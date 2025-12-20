@@ -15,7 +15,7 @@ public class ProductController : Controller
 
 	public IActionResult Index()
 	{
-		var model = _manager.PorductService.GetAllProducts(false).ToList();
+		var model = _manager.PorductService.GetAllProducts(false);
 
 		return View(model);
 	}

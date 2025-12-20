@@ -1,4 +1,4 @@
-@model List<Product>
+@model IQueryable<Product>
 
 @section Footer {
 	<div>
@@ -7,10 +7,16 @@
 }
 
 <div class="row my-3">
+	<div class="col-md-3">
+		@await Component.InvokeAsync(name: "CategoriesMenu")
+	</div>
 
-	@foreach (Product product in Model)
-	{
-		<partial name="_ProductCard" model="@product" />
-	}
-
+	<div class="col-md-9">
+		<div class="row">
+			@foreach (Product product in Model)
+			{
+				<partial name="_ProductCard" model="@product" />
+			}
+		</div>
+	</div>
 </div>
