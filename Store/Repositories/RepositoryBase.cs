@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Contracts;
 using Repositories.Models;
@@ -19,5 +20,12 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T>
 		return trackChange
 			? _context.Set<T>()
 			: _context.Set<T>().AsNoTracking();
+	}
+
+	public T? FindByCondition(Expression<Func<T, bool>> expression, bool trackChange)
+	{
+		return trackChange
+			? _context.Set<T>().Where(expression).SingleOrDefault()
+			: _context.Set<T>().Where(expression).AsNoTracking().SingleOrDefault();
 	}
 }

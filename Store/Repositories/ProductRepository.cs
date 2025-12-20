@@ -12,4 +12,8 @@ public class ProductRepository : RepositoryBase<Product>, IProductRepository
 
 	public IQueryable<Product> GetAllProducts(bool trackChange) => FindAll(trackChange);
 
+	public Product? GetOneProduct(int id, bool trackChange)
+	{
+		return FindByCondition(p => p.ProductId.Equals(id), trackChange);
+	}
 }
