@@ -1,5 +1,6 @@
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Contracts;
 
 namespace StoreApp.Areas.Admin.Controllers;
@@ -22,6 +23,7 @@ public class ProductController : Controller
 
 	public IActionResult Create()
 	{
+		GetSelectListCategoryItems();
 		return View();
 	}
 
@@ -36,6 +38,7 @@ public class ProductController : Controller
 			return RedirectToAction("Index");
 		}
 
+		GetSelectListCategoryItems();
 		return View();
 	}
 
@@ -52,7 +55,6 @@ public class ProductController : Controller
 		if (ModelState.IsValid)
 		{
 			_manager.PorductService.UpdateOneProduct(product);
-
 			return RedirectToAction("Index");
 		}
 
@@ -64,5 +66,33 @@ public class ProductController : Controller
 	{
 		_manager.PorductService.DeleteOneProduct(id);
 		return RedirectToAction("Index");
+	}
+
+	private void GetSelectListCategoryItems()
+	{
+		/*
+			Mantıksal Hata :
+				- Create formu yanlış doldurulup gönderildiğinde (POST),
+				ModelState geçersiz olur ve View tekrar render edilir.
+				- Ancak bu sırada kategori dropdown’u (SelectList) kaybolur.
+			
+			Neden :
+				- SelectList sadece GET Create action’ında dolduruluyordu
+				- POST Create sırasında ModelState geçersiz olunca `return View()` çalışıyor
+				- Ancak ViewBag request bazlıdır
+				- POST sırasında ViewBag tekrar doldurulmadığı için SelectList null olur
+
+			Çözüm:
+        		- SelectList oluşturma işlemi bu metoda taşındı
+        		- GET ve POST action’larında bu metot çağrılarak dropdown’un her durumda 
+				dolu gelmesi sağlandı
+		*/
+
+		ViewBag.Categories = new SelectList(
+			_manager.CategoryService.GetAllCategories(false),
+			"CategoryId",		// Value olarak belirlenen alan
+			"CategoryName"		// Kullanıcıya gösterilecek text
+			// "1"				// Default seçili değer (Ama verilmedi)
+		);
 	}
 }

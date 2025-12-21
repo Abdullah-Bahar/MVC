@@ -11,6 +11,14 @@
 	<div class="text-danger" asp-validation-summary="All"></div>
 
 	<div class="form-group my-3">
+		<label asp-for="CategoryId">Category Name</label>
+		<select class="form-control" asp-for="CategoryId" asp-items="@ViewBag.Categories">
+
+			<option value="">-- Kategori Seçiniz --</option>
+		</select>
+	</div>
+
+	<div class="form-group my-3">
 		<label asp-for="ProductName">Product Name</label>
 		<input asp-for="ProductName" class="form-control" />
 	</div>
