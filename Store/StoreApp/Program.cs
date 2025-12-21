@@ -32,7 +32,7 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 // Services IoC kayıtları yapılıyor
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
-builder.Services.AddScoped<IPorductService, ProductManager>();
+builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
 
 
@@ -46,6 +46,16 @@ app.UseHttpsRedirection();
 
 // MapControllerRoute() ile tanımlanan routing işlemlerinin dikkate alınmasını sağlar
 app.UseRouting();
+
+// Aşağıdaki kullanım net6 öncesi için. Haka çalışır ama önerilmez.
+// app.UseEndpoints( e => { ... });
+
+// Admin Area için route tanımı
+app.MapAreaControllerRoute(
+	name: "admin",
+	areaName: "Admin",
+	pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}"
+);
 
 app.MapControllerRoute(
 	name: "default",

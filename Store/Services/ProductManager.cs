@@ -4,13 +4,29 @@ using Services.Contracts;
 
 namespace Services;
 
-public class ProductManager : IPorductService
+public class ProductManager : IProductService
 {
 	private readonly IRepositoryManager _manager;
 
 	public ProductManager(IRepositoryManager manager)
 	{
 		_manager = manager;
+	}
+
+	public void CreateOneProduct(Product product)
+	{
+		_manager.Product.CreateOneProduct(product);
+		_manager.Save();
+	}
+
+	public void DeleteOneProduct(int id)
+	{
+		Product? product = GetOneProduct(id, false);
+		if (product is not null)
+		{
+			_manager.Product.DeleteOneProduct(product);
+			_manager.Save();
+		}
 	}
 
 	public IEnumerable<Product> GetAllProducts(bool trackChange)
@@ -28,5 +44,13 @@ public class ProductManager : IPorductService
 		}
 
 		return product;
+	}
+
+	public void UpdateOneProduct(Product product)
+	{
+		var model = _manager.Product.GetOneProduct(product.ProductId, true);
+		model.ProductName = product.ProductName;
+		model.Price = product.Price;
+		_manager.Save();
 	}
 }

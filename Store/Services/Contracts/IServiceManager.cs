@@ -2,6 +2,6 @@ namespace Services.Contracts;
 
 public interface IServiceManager
 {
-	IPorductService PorductService { get; }
+	IProductService PorductService { get; }
 	ICategoryService CategoryService { get; }
 }

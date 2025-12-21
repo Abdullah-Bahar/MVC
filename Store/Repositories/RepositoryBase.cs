@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Contracts;
 using Repositories.Models;
@@ -15,6 +16,11 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T>
 		_context = context;
 	}
 
+	public void Create(T entity)
+	{
+		_context.Set<T>().Add(entity);
+	}
+
 	public IQueryable<T> FindAll(bool trackChange)
 	{
 		return trackChange
@@ -27,5 +33,10 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T>
 		return trackChange
 			? _context.Set<T>().Where(expression).SingleOrDefault()
 			: _context.Set<T>().Where(expression).AsNoTracking().SingleOrDefault();
+	}
+
+	public void Remove(T entity)
+	{
+		_context.Set<T>().Remove(entity);
 	}
 }
