@@ -11,4 +11,7 @@ public class Product
 	
 	[Required(ErrorMessage = "Price is Required")]
 	public decimal Price { get; set; }
+
+	public int? CategoryId { get; set; }	// Foreing Key
+	public Category? Category { get; set; }	// Navigation Proporty
 }

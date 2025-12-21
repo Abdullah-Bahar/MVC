@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Entities.Models;
+using Repositories.Config;
+using System.Reflection;
 
 namespace Repositories.Models;
 
@@ -20,44 +22,25 @@ public class RepositoryContext : DbContext
 		// * Model inşa edilirken model üzerinde veri yoksa aşağıdaki verileri ekler,
 		// eğer veri varsa eklemez.
 		// * Bu yazıldıktan sonra tekrar migration atılması gerekir.
-		modelBuilder.Entity<Product>()
-			.HasData(
-				new Product()
-				{
-					ProductId = 1,
-					ProductName = "Computer",
-					Price = 17_000
-				},
-				new Product()
-				{
-					ProductId = 2,
-					ProductName = "Keyboard",
-					Price = 1_000
-				},
-				new Product()
-				{
-					ProductId = 3,
-					ProductName = "Mouse",
-					Price = 500
-				},
-				new Product()
-				{
-					ProductId = 4,
-					ProductName = "Monitor",
-					Price = 10_000
-				},
-				new Product()
-				{
-					ProductId = 5,
-					ProductName = "Deck",
-					Price = 2_000
-				}
-			);
 
-		modelBuilder.Entity<Category>()
-			.HasData(
-				new Category() { CategoryId = 1, CategoryName = "Book" },
-				new Category() { CategoryId = 2, CategoryName = "Electronic" }
-			);
+		// modelBuilder.Entity<Product>()
+		// 	.HasData(
+		// 		- Eklenmesi istenilen veriler buraya yazılıyordu.
+		//		- Config klasörü altında artık her bir model için
+		// 		ilgili configuration dosyaları tanımlanmış bulunmaktadır.
+		//		- Burada ise o ilgili config dosyalarına referans verilmektedir.
+		// 	);
+
+		// I. Config dosylarını ekleme yöntemi :
+		// İlgili config dosyaları tek tek yazılmadılır.
+		// modelBuilder.ApplyConfiguration(new ProductConfig());
+		// modelBuilder.ApplyConfiguration(new CategoryConfig());
+
+		// II. Config dosylarını ekleme yöntemi :
+		// EF Core, bu projedeki bütün ayar dosyalarını kendisi bulup uygular
+		// Ef Core, Config Interface'sini kullanan sınıfları bulup ekler
+		modelBuilder.ApplyConfigurationsFromAssembly(
+			Assembly.GetExecutingAssembly()
+		);
 	}
 }
