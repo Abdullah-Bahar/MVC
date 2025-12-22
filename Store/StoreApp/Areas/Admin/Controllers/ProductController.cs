@@ -45,17 +45,18 @@ public class ProductController : Controller
 
 	public IActionResult Update([FromRoute(Name = "id")] int id)
 	{
-		var model = _manager.PorductService.GetOneProduct(id, false);
+		var model = _manager.PorductService.GetOneProductForUpdate(id, false);
+		GetSelectListCategoryItems(model.CategoryId);
 		return View(model);
 	}
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	public IActionResult Update(Product product)
+	public IActionResult Update([FromForm] ProductDtoForUpdate productDto)
 	{
 		if (ModelState.IsValid)
 		{
-			_manager.PorductService.UpdateOneProduct(product);
+			_manager.PorductService.UpdateOneProduct(productDto);
 			return RedirectToAction("Index");
 		}
 
@@ -69,7 +70,7 @@ public class ProductController : Controller
 		return RedirectToAction("Index");
 	}
 
-	private void GetSelectListCategoryItems()
+	private void GetSelectListCategoryItems(int? categoryId = null)
 	{
 		/*
 			Mantıksal Hata :
@@ -92,8 +93,8 @@ public class ProductController : Controller
 		ViewBag.Categories = new SelectList(
 			_manager.CategoryService.GetAllCategories(false),
 			"CategoryId",		// Value olarak belirlenen alan
-			"CategoryName"		// Kullanıcıya gösterilecek text
-			// "1"				// Default seçili değer (Ama verilmedi)
+			"CategoryName",		// Kullanıcıya gösterilecek text
+			categoryId			// Default seçili değer (Ama verilmedi)
 		);
 	}
 }

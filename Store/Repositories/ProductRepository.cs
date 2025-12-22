@@ -1,5 +1,4 @@
 using Entities.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Repositories.Contracts;
 using Repositories.Models;
 
@@ -21,4 +20,6 @@ public class ProductRepository : RepositoryBase<Product>, IProductRepository
 	{
 		return FindByCondition(p => p.ProductId.Equals(id), trackChange);
 	}
+
+	public void GetOneUpdate(Product product) => Update(product);
 }

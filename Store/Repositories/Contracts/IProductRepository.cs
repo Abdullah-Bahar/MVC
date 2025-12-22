@@ -8,4 +8,5 @@ public interface IProductRepository : IRepositoryBase<Product>
 	Product? GetOneProduct(int id, bool trackChange);
 	void CreateOneProduct(Product product);
 	void DeleteOneProduct(Product product);
+	void GetOneUpdate(Product product);
 }

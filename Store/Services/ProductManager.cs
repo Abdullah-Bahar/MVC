@@ -52,11 +52,19 @@ public class ProductManager : IProductService
 		return product;
 	}
 
-	public void UpdateOneProduct(Product product)
+	public ProductDtoForUpdate GetOneProductForUpdate(int id, bool trackChange)
 	{
-		var model = _manager.Product.GetOneProduct(product.ProductId, true);
-		model.ProductName = product.ProductName;
-		model.Price = product.Price;
+		var product = GetOneProduct(id, trackChange);
+		var productDto = _mapper.Map<ProductDtoForUpdate>(product);
+		return productDto;
+	}
+
+	public void UpdateOneProduct(ProductDtoForUpdate productDto)
+	{
+		// Yeni referans atanacağı için EF Core bu nesneyi izlemeyi bırakır ve ilgili değişiklikler yakalanamaz
+		// Dolayısıyla EF Core'dan update işlemi kullanılacak  
+		var product = _mapper.Map<Product>(productDto);
+		_manager.Product.GetOneUpdate(product);
 		_manager.Save();
 	}
 }
