@@ -1,3 +1,4 @@
+using Entities.DTOs;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,11 +30,11 @@ public class ProductController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	public IActionResult Create([FromForm] Product product)
+	public IActionResult Create([FromForm] ProductDtoForInsertion productDto)
 	{
 		if (ModelState.IsValid)
 		{
-			_manager.PorductService.CreateOneProduct(product);
+			_manager.PorductService.CreateOneProduct(productDto);
 
 			return RedirectToAction("Index");
 		}

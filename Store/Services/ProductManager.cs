@@ -1,3 +1,4 @@
+using Entities.DTOs;
 using Entities.Models;
 using Repositories.Contracts;
 using Services.Contracts;
@@ -13,8 +14,16 @@ public class ProductManager : IProductService
 		_manager = manager;
 	}
 
-	public void CreateOneProduct(Product product)
+	public void CreateOneProduct(ProductDtoForInsertion productDto)
 	{
+		// DTO nesnesi ile Entity nesnesi arasında eşleme yapılıyor
+		Product product = new Product()
+		{
+			ProductName = productDto.ProductName,
+			Price = productDto.Price,
+			CategoryId = productDto.CategoryId
+		};
+
 		_manager.Product.CreateOneProduct(product);
 		_manager.Save();
 	}
