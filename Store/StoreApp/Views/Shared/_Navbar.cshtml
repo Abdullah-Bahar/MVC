@@ -5,11 +5,15 @@
 			aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		<div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
 				<a class="nav-link text-light active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
 				<a class="nav-link text-light" aria-current="page" asp-controller="Product" asp-action="Index">Products (@await Component.InvokeAsync("ProductSummary"))</a>
 				<a class="nav-link text-light" aria-current="page" asp-controller="Category" asp-action="Index">Category</a>
+				<a class="nav-link text-light" aria-current="page" asp-page="/Contact">Contact</a>
+			</div>
+			<div class="navbar-nav">
+				<a class="nav-link text-light" aria-current="page" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin</a>
 			</div>
 		</div>
 	</div>

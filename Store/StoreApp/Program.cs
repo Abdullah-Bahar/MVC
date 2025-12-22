@@ -13,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Servis kayıtları Middleware yapılarıyla birlikte kullanılabilir
 builder.Services.AddControllersWithViews(); // Controller + View => Servis Kaydı
 
+builder.Services.AddRazorPages(); // Uygulamaya Razor Page'ler de eklendi.
+
 // DbContext'in servis kaydı yapıldı
 builder.Services.AddDbContext<RepositoryContext>(options =>
 {
@@ -64,5 +66,7 @@ app.MapAreaControllerRoute(
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages(); // Razor page için Route mekanizması eklendi
 
 app.Run();
