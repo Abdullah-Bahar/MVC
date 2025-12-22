@@ -35,6 +35,10 @@ builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
 
+// AutoMapper DI'a kaydedilir
+// Program.cs dosyasının bulunduğu assembly’i referans al ve bu assembly'de 
+// Profile'dan türeyen tüm sınıflar bul. (Dinamik yapı)
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
