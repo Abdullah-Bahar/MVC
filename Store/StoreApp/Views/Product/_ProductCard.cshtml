@@ -2,9 +2,10 @@
 
 <div class="col-sm-12 col-md-6 col-lg-4 p-3">
 	<div class="card" style="width: 18rem;">
-		<img src="~/image/default.jpg" class="card-img-top" alt="Product Image">
+		<img src="@Model.ImageUrl" class="card-img-top" alt="Product Image">
 		<div class="card-body">
 			<h5 class="card-title">@Model.ProductName</h5>
+			<p class="card-text">@Model.Summary</p>
 			<p class="card-text">@Model.Price.ToString("c")</p>
 			<a class="btn btn-primary" asp-action="Get" asp-route-id="@Model.ProductId">
 				<i class="fa-solid fa-arrow-right"></i>

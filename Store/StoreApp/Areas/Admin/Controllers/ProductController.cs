@@ -30,12 +30,31 @@ public class ProductController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	public IActionResult Create([FromForm] ProductDtoForInsertion productDto)
+	public async Task<IActionResult> Create([FromForm] ProductDtoForInsertion productDto, 
+		[FromForm] IFormFile file) // ilgili input alanındaki name file olduğu için .NET Model Binding işlemini gerçekleştirir.
 	{
 		if (ModelState.IsValid)
 		{
-			_manager.PorductService.CreateOneProduct(productDto);
+			// file operation
+			string path = Path.Combine(				// Path.Combine() işletim sistemlerin kullanılan farklı ayraçlara ("/", "\") göre path'i birleştirir.
+				Directory.GetCurrentDirectory(),	// Projenin çalıştığı kök dizin (“Bu uygulama nerede çalışıyor?”)
+				"wwwroot", "image", file.FileName); // "wwwroot/image/filename"
 
+			// using => Maliyeti yüksek, kaynak gerektiren işlemler için kullanılır (Kullan ve imha et)
+			using (var stream = new FileStream(path, FileMode.Create)) 
+			{
+				// ilgli path'te bir dosya oluşturulur ve parametre olarak gelen dosyayı oraya kopyalar 
+				await file.CopyToAsync(stream);
+
+				/*
+					* IFormFile, gelen dosyanın geçici temsilidir; FileStream ile bu geçici veriyi fiziksel diske bilinçli olarak yazdırırız; 
+					wwwroot altına yazmamızın sebebi tarayıcıdan erişilebilir kılmaktır.
+				*/
+			}
+
+			productDto.ImageUrl = String.Concat("/image/", file.FileName);
+
+			_manager.PorductService.CreateOneProduct(productDto);
 			return RedirectToAction("Index");
 		}
 
@@ -52,14 +71,27 @@ public class ProductController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	public IActionResult Update([FromForm] ProductDtoForUpdate productDto)
+	public async Task<IActionResult> Update([FromForm] ProductDtoForUpdate productDto, IFormFile? file)
+	// IFormFile null geçilebilir değilse ve update işlemin dosya seçimi yapılmadan başka bir güncelleme
+	// yapıldığı takdirde NullReferenceException fırlatır.
 	{
 		if (ModelState.IsValid)
 		{
+			string path = Path.Combine(Directory.GetCurrentDirectory(),
+				"wwwroot", "image", file.FileName);
+
+			using (var stream = new FileStream(path, FileMode.Create))
+			{
+				await file.CopyToAsync(stream);
+			}
+
+			productDto.ImageUrl = String.Concat("/image/", file.FileName);
+
 			_manager.PorductService.UpdateOneProduct(productDto);
 			return RedirectToAction("Index");
 		}
 
+		GetSelectListCategoryItems(productDto.CategoryId);
 		return View();
 	}
 
@@ -92,9 +124,9 @@ public class ProductController : Controller
 
 		ViewBag.Categories = new SelectList(
 			_manager.CategoryService.GetAllCategories(false),
-			"CategoryId",		// Value olarak belirlenen alan
-			"CategoryName",		// Kullanıcıya gösterilecek text
-			categoryId			// Default seçili değer (Ama verilmedi)
+			"CategoryId",       // Value olarak belirlenen alan
+			"CategoryName",     // Kullanıcıya gösterilecek text
+			categoryId          // Default seçili değer (Ama verilmedi)
 		);
 	}
 }

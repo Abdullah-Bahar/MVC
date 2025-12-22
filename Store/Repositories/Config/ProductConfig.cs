@@ -18,6 +18,7 @@ public class ProductConfig : IEntityTypeConfiguration<Product>
 			{
 				ProductId = 1,
 				ProductName = "Computer",
+				ImageUrl ="/image/1.jpg",
 				Price = 17_000,
 				CategoryId = 1
 			},
@@ -25,6 +26,7 @@ public class ProductConfig : IEntityTypeConfiguration<Product>
 			{
 				ProductId = 2,
 				ProductName = "Keyboard",
+				ImageUrl ="/image/2.jpg",
 				Price = 1_000,
 				CategoryId = 1
 			},
@@ -32,6 +34,7 @@ public class ProductConfig : IEntityTypeConfiguration<Product>
 			{
 				ProductId = 3,
 				ProductName = "Mouse",
+				ImageUrl ="/image/3.jpg",
 				Price = 500,
 				CategoryId = 1
 			},
@@ -39,6 +42,7 @@ public class ProductConfig : IEntityTypeConfiguration<Product>
 			{
 				ProductId = 4,
 				ProductName = "Monitor",
+				ImageUrl ="/image/4.jpg",
 				Price = 10_000,
 				CategoryId = 2
 			},
@@ -46,6 +50,7 @@ public class ProductConfig : IEntityTypeConfiguration<Product>
 			{
 				ProductId = 5,
 				ProductName = "Deck",
+				ImageUrl ="/image/5.jpg",
 				Price = 2_000,
 				CategoryId = 2
 			}

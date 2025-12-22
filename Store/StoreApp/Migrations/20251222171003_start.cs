@@ -7,7 +7,7 @@
 namespace StoreApp.Migrations
 {
     /// <inheritdoc />
-    public partial class initialize : Migration
+    public partial class start : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,8 @@ namespace StoreApp.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ProductName = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Summary = table.Column<string>(type: "TEXT", nullable: true),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
                     CategoryId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -56,14 +58,14 @@ namespace StoreApp.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductId", "CategoryId", "Price", "ProductName" },
+                columns: new[] { "ProductId", "CategoryId", "ImageUrl", "Price", "ProductName", "Summary" },
                 values: new object[,]
                 {
-                    { 1, 1, 17000m, "Computer" },
-                    { 2, 1, 1000m, "Keyboard" },
-                    { 3, 1, 500m, "Mouse" },
-                    { 4, 2, 10000m, "Monitor" },
-                    { 5, 2, 2000m, "Deck" }
+                    { 1, 1, "~/image/1.jpg", 17000m, "Computer", "" },
+                    { 2, 1, "~/image/2.jpg", 1000m, "Keyboard", "" },
+                    { 3, 1, "~/image/3.jpg", 500m, "Mouse", "" },
+                    { 4, 2, "~/image/4.jpg", 10000m, "Monitor", "" },
+                    { 5, 2, "~/image/5.jpg", 2000m, "Deck", "" }
                 });
 
             migrationBuilder.CreateIndex(
