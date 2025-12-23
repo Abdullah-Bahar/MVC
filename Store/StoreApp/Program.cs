@@ -1,3 +1,4 @@
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Contracts;
@@ -36,6 +37,9 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
+
+// Bir tane Cart nesnesi üretilecek ve herkes onu kullanacak
+builder.Services.AddSingleton<Cart>();
 
 // AutoMapper DI'a kaydedilir
 // Program.cs dosyasının bulunduğu assembly’i referans al ve bu assembly'de 
