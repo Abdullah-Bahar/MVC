@@ -1,10 +1,9 @@
-using System.IO.Compression;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Contracts;
 
-namespace StoreApp.Pages;
+namespace StoreApp.Pages.CartPage;
 
 public class CartModel : PageModel
 {

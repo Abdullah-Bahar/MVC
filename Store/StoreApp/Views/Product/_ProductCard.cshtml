@@ -9,7 +9,7 @@
 			<p class="card-text">@Model.Price.ToString("c")</p>
 
 			<div class="btn btn-group">
-				<form id="@Model.ProductId" asp-page="/cart" method="post">
+				<form id="@Model.ProductId" asp-page="/CartPage/Cart" method="post">
 					
 					<input type="hidden" asp-for="ProductId">
 					<input type="hidden" name="returnUrl" value="/">
