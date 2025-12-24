@@ -28,6 +28,12 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
 	b => b.MigrationsAssembly("StoreApp"));
 });
 
+// Session verileri RAM'de tutulacak. App restart yerse silinir.
+builder.Services.AddDistributedMemoryCache();
+
+// Bu uygulama session kullanacak
+builder.Services.AddSession();
+
 // Repository IoC kayıtları yapılıyor
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -51,13 +57,16 @@ var app = builder.Build();
 // Uygulama static dosyalarda kullanacak. (wwwroot altındakiler)
 app.UseStaticFiles();
 
+// HTTP pipeline’a session middleware’i ekler
+app.UseSession();
+
 // Rederiction mekanizması eklendi
 app.UseHttpsRedirection();
 
 // MapControllerRoute() ile tanımlanan routing işlemlerinin dikkate alınmasını sağlar
 app.UseRouting();
 
-// Aşağıdaki kullanım net6 öncesi için. Haka çalışır ama önerilmez.
+// Aşağıdaki kullanım net6 öncesi için. Hala çalışır ama önerilmez.
 // app.UseEndpoints( e => { ... });
 
 // Admin Area için route tanımı
