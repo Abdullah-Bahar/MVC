@@ -30,9 +30,14 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
 
 // Session verileri RAM'de tutulacak. App restart yerse silinir.
 builder.Services.AddDistributedMemoryCache();
-
 // Bu uygulama session kullanacak
-builder.Services.AddSession();
+builder.Services.AddSession( options =>
+{
+	options.Cookie.Name = "StoreApp.Session";		// Session adını değiştirdik
+	options.IdleTimeout = TimeSpan.FromMinutes(10); // İlgili bilgileri 10 dk boyunca tut
+});
+// Controller/PageModel dışında (ör. Service katmanında) geçerli HTTP isteğine ve Session’a erişebilmemizi sağlar.
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Repository IoC kayıtları yapılıyor
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
