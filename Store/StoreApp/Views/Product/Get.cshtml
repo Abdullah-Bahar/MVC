@@ -8,8 +8,9 @@
 				@Model.ProductName
 			</h6>
 
-			<img src="@Model.ImageUrl" alt="@Model.ProductName" class="img-fluid shadow rounded-3 my-3 max-witdh" height="400" width="400">
-			
+			<img src="@Model.ImageUrl" alt="@Model.ProductName" class="img-fluid shadow rounded-3 my-3 max-witdh"
+				height="400" width="400">
+
 			<p>@Model.Summary</p>
 
 			<p class="lead text-danger">@Model.Price.ToString("c")</p>
@@ -18,8 +19,9 @@
 
 </div>
 
-<div>
+<div class="text-center">
 	<div class="btn-group">
+
 		<a class="btn btn-outline-primary" asp-controller="Home" asp-action="Index">
 			<i class="fa-solid fa-house"></i>
 			Home
@@ -28,6 +30,15 @@
 			<i class="fa-solid fa-list"></i>
 			Product
 		</a>
+		
+		<form id="@Model.ProductId" asp-page="/CartPage/Cart" method="post">
+			<input type="hidden" asp-for="ProductId">
+			<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()">
+
+			<button type="submit" class="btn btn-outline-primary">
+				<i class="fa fa-cart-plus"></i>
+			</button>
+		</form>
 	</div>
 </div>
 

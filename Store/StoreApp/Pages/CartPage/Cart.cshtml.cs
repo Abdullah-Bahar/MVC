@@ -9,7 +9,7 @@ public class CartModel : PageModel
 {
 	private readonly IServiceManager _maneger;
 	public readonly Cart Cart;
-	
+
 	// Kullanıcının hangi sayfandan geliği bilgisini tutmak için (geri döndüğünde aynı sayfaya gitsin)
 	public string ReturnUrl { get; set; } = "/";
 
@@ -33,7 +33,8 @@ public class CartModel : PageModel
 			Cart.AddItem(product, 1);
 		}
 
-		return Page(); // returnUrl
+		// Anonymous Object return eder
+		return RedirectToPage(new { returnUrl }); // returnUrl
 	}
 
 	public IActionResult OnPostRemove(int id, string returnUrl)

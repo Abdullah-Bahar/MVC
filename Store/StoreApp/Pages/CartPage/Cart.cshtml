@@ -17,7 +17,7 @@
 				<th></th>
 			</tr>
 		</thead>
-		
+
 		<tbody>
 			@foreach (var line in Model.Cart.Lines ?? Enumerable.Empty<CartLine>())
 			{
@@ -49,8 +49,17 @@
 				</td>
 			</tr>
 			<tr>
-				Return URL (Gözüküyor mu?) => @Model.ReturnUrl
+				<td>
+					Return URL (Gözüküyor mu?) => @Model.ReturnUrl
+				</td>
 			</tr>
 		</tfoot>
 	</table>
+	<div class="text-center my-3">
+		<button class="btn-group">
+			<a href="@Model?.ReturnUrl" class="btn btn-primary">
+				Continue Shopping
+			</a>
+		</button>
+	</div>
 </div>
