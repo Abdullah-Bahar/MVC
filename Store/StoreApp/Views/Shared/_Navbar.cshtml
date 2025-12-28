@@ -13,7 +13,10 @@
 				<a class="nav-link text-light" aria-current="page" asp-page="/Contact/Contact">Contact</a>
 			</div>
 			<div class="navbar-nav">
-				<a class="nav-link text-light" aria-current="page" asp-page="/CartPage/Cart">Cart</a>
+				<a class="nav-link text-light" aria-current="page" asp-page="/CartPage/Cart">
+				<i class="fa-solid fa-cart-shopping"></i>
+					Cart (@await Component.InvokeAsync("CartSummary"))
+				</a>
 				<a class="nav-link text-light" aria-current="page" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin</a>
 			</div>
 		</div>
