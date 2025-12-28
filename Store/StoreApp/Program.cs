@@ -5,6 +5,7 @@ using Repositories.Contracts;
 using Repositories.Models;
 using Services;
 using Services.Contracts;
+using StoreApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +51,11 @@ builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
 
 // Bir tane Cart nesnesi üretilecek ve herkes onu kullanacak
-builder.Services.AddSingleton<Cart>();
+// builder.Services.AddSingleton<Cart>();
+
+// Üretilecek Cart class'ı SessionCart olaeak gelecek artık
+// Ve artık herkes aynı nesneyi değil, her istek için bu servis kaydı çalışacak
+builder.Services.AddScoped<Cart>(c => SessionCart.GetCart(c));
 
 // AutoMapper DI'a kaydedilir
 // Program.cs dosyasının bulunduğu assembly’i referans al ve bu assembly'de 

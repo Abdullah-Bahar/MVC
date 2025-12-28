@@ -51,10 +51,10 @@ public static class SessionExtension
 	}
 
 	// Deserialize (JSON -> Default)
-	public static T? GetJon<T>(this ISession session, string key)
+	public static T? GetJson<T>(this ISession session, string key)
 	{
 		var data = session.GetString(key);
-		
+
 		return data is null
 			? default(T)
 			: JsonSerializer.Deserialize<T>(data);
