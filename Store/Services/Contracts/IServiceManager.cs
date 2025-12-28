@@ -4,4 +4,5 @@ public interface IServiceManager
 {
 	IProductService PorductService { get; }
 	ICategoryService CategoryService { get; }
+	IOrderService OrderService { get; }
 }
