@@ -1,0 +1,27 @@
+@page
+
+<div class="text-center">
+	<h6 class="display-6">Thanksssss</h6>
+
+	<p>Thanks for placing order #@OrderId</p>
+	<p>We'll ship your goods as soon as possible</p>
+
+	<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Return to Home</a>
+</div>
+
+
+@* 
+	- Razor Page Code Behind  
+	- Page Model gibi düşünülebilir
+*@
+@functions
+{
+	/*
+		- [BindProperty(SupportsGet = true)] 	=> GET + POST	
+		- [BindProperty] 						=> POST	
+	*/
+
+	// QueryString Binding
+	[BindProperty(SupportsGet = true)]
+	public String? OrderId { get; set; }
+}

@@ -11,7 +11,7 @@ using Repositories.Models;
 namespace StoreApp.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20251222171003_start")]
+    [Migration("20251231191805_start")]
     partial class start
     {
         /// <inheritdoc />
@@ -19,6 +19,30 @@ namespace StoreApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.22");
+
+            modelBuilder.Entity("Entities.Models.CartLine", b =>
+                {
+                    b.Property<int>("CartLineId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CartLineId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartLine");
+                });
 
             modelBuilder.Entity("Entities.Models.Category", b =>
                 {
@@ -45,6 +69,43 @@ namespace StoreApp.Migrations
                             CategoryId = 2,
                             CategoryName = "Electronic"
                         });
+                });
+
+            modelBuilder.Entity("Entities.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("GiftWrap")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Line1")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Line2")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Line3")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("OrderedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Shipped")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Entities.Models.Product", b =>
@@ -80,7 +141,7 @@ namespace StoreApp.Migrations
                         {
                             ProductId = 1,
                             CategoryId = 1,
-                            ImageUrl = "~/image/1.jpg",
+                            ImageUrl = "/image/1.jpg",
                             Price = 17000m,
                             ProductName = "Computer",
                             Summary = ""
@@ -89,7 +150,7 @@ namespace StoreApp.Migrations
                         {
                             ProductId = 2,
                             CategoryId = 1,
-                            ImageUrl = "~/image/2.jpg",
+                            ImageUrl = "/image/2.jpg",
                             Price = 1000m,
                             ProductName = "Keyboard",
                             Summary = ""
@@ -98,7 +159,7 @@ namespace StoreApp.Migrations
                         {
                             ProductId = 3,
                             CategoryId = 1,
-                            ImageUrl = "~/image/3.jpg",
+                            ImageUrl = "/image/3.jpg",
                             Price = 500m,
                             ProductName = "Mouse",
                             Summary = ""
@@ -107,7 +168,7 @@ namespace StoreApp.Migrations
                         {
                             ProductId = 4,
                             CategoryId = 2,
-                            ImageUrl = "~/image/4.jpg",
+                            ImageUrl = "/image/4.jpg",
                             Price = 10000m,
                             ProductName = "Monitor",
                             Summary = ""
@@ -116,11 +177,26 @@ namespace StoreApp.Migrations
                         {
                             ProductId = 5,
                             CategoryId = 2,
-                            ImageUrl = "~/image/5.jpg",
+                            ImageUrl = "/image/5.jpg",
                             Price = 2000m,
                             ProductName = "Deck",
                             Summary = ""
                         });
+                });
+
+            modelBuilder.Entity("Entities.Models.CartLine", b =>
+                {
+                    b.HasOne("Entities.Models.Order", null)
+                        .WithMany("Lines")
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("Entities.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Entities.Models.Product", b =>
@@ -135,6 +211,11 @@ namespace StoreApp.Migrations
             modelBuilder.Entity("Entities.Models.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Entities.Models.Order", b =>
+                {
+                    b.Navigation("Lines");
                 });
 #pragma warning restore 612, 618
         }

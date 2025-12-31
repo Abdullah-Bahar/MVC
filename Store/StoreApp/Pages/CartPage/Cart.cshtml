@@ -56,10 +56,11 @@
 		</tfoot>
 	</table>
 	<div class="text-center my-3">
-		<button class="btn-group">
-			<a href="@Model?.ReturnUrl" class="btn btn-primary">
-				Continue Shopping
-			</a>
-		</button>
+		<a href="@Model?.ReturnUrl" class="btn btn-primary">
+			Continue Shopping
+		</a>
+		<a asp-action="Checkout" asp-controller="Order" class="btn btn-primary mx-2">
+			Checkout
+		</a>
 	</div>
 </div>
