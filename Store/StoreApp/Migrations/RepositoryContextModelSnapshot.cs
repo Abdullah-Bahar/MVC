@@ -124,6 +124,9 @@ namespace StoreApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("ShowCase")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Summary")
                         .HasColumnType("TEXT");
 
@@ -141,6 +144,7 @@ namespace StoreApp.Migrations
                             ImageUrl = "/image/1.jpg",
                             Price = 17000m,
                             ProductName = "Computer",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
@@ -150,6 +154,7 @@ namespace StoreApp.Migrations
                             ImageUrl = "/image/2.jpg",
                             Price = 1000m,
                             ProductName = "Keyboard",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
@@ -159,6 +164,7 @@ namespace StoreApp.Migrations
                             ImageUrl = "/image/3.jpg",
                             Price = 500m,
                             ProductName = "Mouse",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
@@ -168,6 +174,7 @@ namespace StoreApp.Migrations
                             ImageUrl = "/image/4.jpg",
                             Price = 10000m,
                             ProductName = "Monitor",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
@@ -177,6 +184,37 @@ namespace StoreApp.Migrations
                             ImageUrl = "/image/5.jpg",
                             Price = 2000m,
                             ProductName = "Deck",
+                            ShowCase = false,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 6,
+                            CategoryId = 2,
+                            ImageUrl = "/image/6.jpg",
+                            Price = 32000m,
+                            ProductName = "huwai",
+                            ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            CategoryId = 1,
+                            ImageUrl = "/image/7.jpg",
+                            Price = 12000m,
+                            ProductName = "Havaryu",
+                            ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 8,
+                            CategoryId = 1,
+                            ImageUrl = "/image/8.jpg",
+                            Price = 22000m,
+                            ProductName = "Nevaryu",
+                            ShowCase = true,
                             Summary = ""
                         });
                 });

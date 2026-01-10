@@ -11,4 +11,5 @@ public class Product
 	public String? ImageUrl { get; set; } = String.Empty;
 	public int? CategoryId { get; set; }	// Foreing Key
 	public Category? Category { get; set; }	// Navigation Proporty
+	public bool ShowCase { get; set;}
 }

@@ -57,4 +57,7 @@ app.MapControllerRoute(
 
 app.MapRazorPages(); // Razor page için Route mekanizması eklendi
 
+// Uygulama başlatılırken migration'lar kontrol edilsin ve varsa uygulansın (Genişletilmiş method)
+app.ConfigureAndCheckMigration();
+
 app.Run();
