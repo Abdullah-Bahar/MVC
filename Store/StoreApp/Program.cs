@@ -1,11 +1,4 @@
-using Entities.Models;
-using Microsoft.EntityFrameworkCore;
-using Repositories;
-using Repositories.Contracts;
-using Repositories.Models;
-using Services;
-using Services.Contracts;
-using StoreApp.Models;
+using StoreApp.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,47 +10,17 @@ builder.Services.AddControllersWithViews(); // Controller + View => Servis Kayd�
 
 builder.Services.AddRazorPages(); // Uygulamaya Razor Page'ler de eklendi.
 
-// DbContext'in servis kaydı yapıldı
-builder.Services.AddDbContext<RepositoryContext>(options =>
-{
-	// appsettings.json içinden gelen connection string
-	options.UseSqlite(builder.Configuration.GetConnectionString("sqlconnection"),
+// DbContext Extentsion metodu ile kaydedildi
+builder.Services.ConfigureDbContext(builder.Configuration);
 
-	// * EFCore default olarak migration klasörünü DBContext'in olduğu yerde açar.
-	// * Aşağıdaki configuration ile Migration/ klasörü DbContext'in olduğu yer yerine 
-	// StoreApp projesi içerisinde oluşturulur. 
-	b => b.MigrationsAssembly("StoreApp"));
-});
+// Session Extension metodu ile kaydedildi
+builder.Services.ConfigureSession();
 
-// Session verileri RAM'de tutulacak. App restart yerse silinir.
-builder.Services.AddDistributedMemoryCache();
-// Bu uygulama session kullanacak
-builder.Services.AddSession( options =>
-{
-	options.Cookie.Name = "StoreApp.Session";		// Session adını değiştirdik
-	options.IdleTimeout = TimeSpan.FromMinutes(10); // İlgili bilgileri 10 dk boyunca tut
-});
-// Controller/PageModel dışında (ör. Service katmanında) geçerli HTTP isteğine ve Session’a erişebilmemizi sağlar.
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+// Repository Extension metodu ile kaydedildi
+builder.Services.ConfigureRepositoryRegistration();
 
-// Repository IoC kayıtları yapılıyor
-builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-
-// Services IoC kayıtları yapılıyor
-builder.Services.AddScoped<IServiceManager, ServiceManager>();
-builder.Services.AddScoped<IProductService, ProductManager>();
-builder.Services.AddScoped<ICategoryService, CategoryManager>();
-builder.Services.AddScoped<IOrderService, OrderManager>();
-
-// Bir tane Cart nesnesi üretilecek ve herkes onu kullanacak
-// builder.Services.AddSingleton<Cart>();
-
-// Üretilecek Cart class'ı SessionCart olaeak gelecek artık
-// Ve artık herkes aynı nesneyi değil, her istek için bu servis kaydı çalışacak
-builder.Services.AddScoped<Cart>(c => SessionCart.GetCart(c));
+// Service Extension metodu ile kaydedildi
+builder.Services.ConfigureServiceRegistration();
 
 // AutoMapper DI'a kaydedilir
 // Program.cs dosyasının bulunduğu assembly’i referans al ve bu assembly'de 
@@ -78,7 +41,7 @@ app.UseHttpsRedirection();
 // MapControllerRoute() ile tanımlanan routing işlemlerinin dikkate alınmasını sağlar
 app.UseRouting();
 
-// Aşağıdaki kullanım net6 öncesi için. Hala çalışır ama önerilmez.
+// Aşağıdaki kullanım .net6 öncesi için. Hala çalışır ama önerilmez.
 // app.UseEndpoints( e => { ... });
 
 // Admin Area için route tanımı
