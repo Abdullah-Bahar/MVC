@@ -65,4 +65,13 @@ public static class ServiceExtension
 		services.AddScoped<ICategoryService, CategoryManager>();
 		services.AddScoped<IOrderService, OrderManager>();
 	}
+
+	public static void ConfigureRouting(this IServiceCollection services)
+	{
+		services.AddRouting(options =>
+		{
+			options.LowercaseUrls = true; // Tüm url küçük harf olması durumu
+			options.AppendTrailingSlash = false; // Tüm url'lerin sonuna "/" eklenip eklenmemesi
+		});
+	}
 }
