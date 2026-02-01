@@ -1,11 +1,13 @@
 using Entities.DTOs;
 using Entities.Models;
+using Entities.RequestParameters;
 
 namespace Services.Contracts;
 
 public interface IProductService
 {
 	IEnumerable<Product> GetAllProducts(bool trackChange);
+	IEnumerable<Product> GetAllProductsWithDetails(ProductRequestParameters p);
 	IEnumerable<Product> GetShowcaseProducts(bool trackChange);
 	Product? GetOneProduct(int id, bool trackChange);
 	void CreateOneProduct(ProductDtoForInsertion productDto);
