@@ -4,8 +4,8 @@ using Repositories.Models;
 namespace StoreApp.Infrastructure.Extensions;
 
 /*
+	--------------------------------
 		startup-time migration
-
 	--------------------------------
 
 	* app.ApplicationServices
@@ -16,6 +16,29 @@ namespace StoreApp.Infrastructure.Extensions;
 		NOT : Root container, scoped servisleri doğrudan veremez. 
 			> Çünkü scoped servislerin yaşam süresi bir HTTP isteği ile sınırlıdır. 
 			> Root container ise uygulama kapanana kadar yaşar.
+
+	--------------------------------
+		request localization
+	--------------------------------
+
+	* ASP.NET Core’da Localization:
+		- Uygulamanın tarih, saat, sayı, para birimi gibi 
+		kültüre bağlı formatlarını belirler.
+		- MVC validation mesajları ve UI metinleri bu ayarlara göre şekillenir.
+
+	* Culture (SupportedCultures)
+		- Veri formatlama kültürüdür.
+		- DateTime, decimal, double gibi tiplerin
+		  nasıl parse edileceğini ve gösterileceğini belirler.
+	
+	* UI Culture (SupportedUICultures)
+		- Arayüz dilidir.
+		- DataAnnotations validation mesajları,
+		  framework mesajları ve Resource (.resx) dosyaları bu kültüre göre çalışır.
+	
+	* RequestLocalization Middleware:
+		- Her HTTP isteği için culture bilgisini belirler.
+		- Bu middleware eklenmeden önce culture ayarı yapılamaz.
 */
 
 public static class ApplicationExtension
@@ -23,9 +46,9 @@ public static class ApplicationExtension
 	public static void ConfigureAndCheckMigration(this IApplicationBuilder app)
 	{
 		RepositoryContext context = app
-			.ApplicationServices 	// Uygulamanın Root DI Container'ı
-			.CreateScope()			// Scoped bir servisi kullanabilmek için manuel scope açmak gerekir
-			.ServiceProvider		// Açılan scope'un DI Konteynırı
+			.ApplicationServices    // Uygulamanın Root DI Container'ı
+			.CreateScope()          // Scoped bir servisi kullanabilmek için manuel scope açmak gerekir
+			.ServiceProvider        // Açılan scope'un DI Konteynırı
 			.GetRequiredService<RepositoryContext>(); // DI Container'ından RepositoryContext istenir.
 
 		if (context.Database.GetPendingMigrations().Any())
@@ -46,5 +69,18 @@ public static class ApplicationExtension
 			*/
 			context.Database.Migrate();
 		}
+	}
+
+	public static void ConfigureLocalization(this WebApplication app)
+	{
+		app.UseRequestLocalization(options =>
+		{
+			// Yerel uygulama olduğu için bir tane dil eklendi.
+			// İstenildiği takdirde pek çok dil eklenebilir.
+
+			options.AddSupportedCultures("tr-TR")       // Veri formatlama culture
+	   			.AddSupportedUICultures("tr-TR")     // UI culture
+	   			.SetDefaultCulture("tr-TR");         // Default cultureF
+		});
 	}
 }

@@ -60,4 +60,7 @@ app.MapRazorPages(); // Razor page için Route mekanizması eklendi
 // Uygulama başlatılırken migration'lar kontrol edilsin ve varsa uygulansın (Genişletilmiş method)
 app.ConfigureAndCheckMigration();
 
+// Uygulama için lokalizasyon ayarları yapılır - Dil ayarları (Genişletilmiş method)
+app.ConfigureLocalization();
+
 app.Run();
