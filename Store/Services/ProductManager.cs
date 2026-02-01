@@ -59,6 +59,12 @@ public class ProductManager : IProductService
 		return productDto;
 	}
 
+	public IEnumerable<Product> GetShowcaseProducts(bool trackChange)
+	{
+		var products = _manager.Product.GetShowcaseProducts(trackChange);
+		return products;
+	}
+
 	public void UpdateOneProduct(ProductDtoForUpdate productDto)
 	{
 		// Yeni referans atanacağı için EF Core bu nesneyi izlemeyi bırakır ve ilgili değişiklikler yakalanamaz

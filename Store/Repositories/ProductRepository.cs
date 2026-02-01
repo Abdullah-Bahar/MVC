@@ -22,4 +22,11 @@ public class ProductRepository : RepositoryBase<Product>, IProductRepository
 	}
 
 	public void GetOneUpdate(Product product) => Update(product);
+
+	public IQueryable<Product> GetShowcaseProducts(bool trackChange)
+	{
+		return FindAll(trackChange)
+			.Where(p => p.ShowCase.Equals(true));
+		
+	}
 }
