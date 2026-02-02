@@ -23,7 +23,8 @@ public sealed class ProductRepository : RepositoryBase<Product>, IProductReposit
 	{
 		return _context
 			.Products
-			.FilterByCategoryId(p.CategoryId);
+			.FilterByCategoryId(p.CategoryId)
+			.FilterBySearchTerm(p.SearchTerm);
 	}
 
 	public Product? GetOneProduct(int id, bool trackChange)
