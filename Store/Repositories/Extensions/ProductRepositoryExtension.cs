@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Entities.Models;
 
 namespace Repository.Extensions;
@@ -29,6 +30,18 @@ public static class ProductRepositoryExtension
 			return products.Where(prd => prd.ProductName
 									.ToLower()
 									.Contains(searchTerm.ToLower()));
+		}
+	}
+
+	public static IQueryable<Product> FilterByPrice(this IQueryable<Product> products, int minPrice, int maxPrice, bool isValidPrice)
+	{
+		if (isValidPrice)
+		{
+			return products.Where(prd => prd.Price <= maxPrice && prd.Price >= minPrice);
+		}
+		else
+		{
+			return products;
 		}
 	}
 }
