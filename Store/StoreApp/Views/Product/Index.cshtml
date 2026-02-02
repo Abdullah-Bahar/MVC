@@ -1,4 +1,4 @@
-@model IQueryable<Product>
+@model ProductListViewModel
 
 @section Footer {
 	<div>
@@ -14,11 +14,22 @@
 	</div>
 
 	<div class="col-md-9">
-		<div class="row">
-			@foreach (Product product in Model)
+		<div class="row my-3">
+			@foreach (Product product in Model.Products)
 			{
 				<partial name="_ProductCard" model="@product" />
 			}
+		</div>
+
+		<div>
+			<div pagination="@Model.Pagination" 
+				page-action="Index"
+				class="btn-group" 
+				page-classes-enabled="true" 
+				page-class="btn"
+				page-class-normal="btn-outline-dark"
+				page-class-selected="btn-primary">
+			</div>
 		</div>
 	</div>
 </div>

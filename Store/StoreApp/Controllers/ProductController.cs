@@ -1,6 +1,7 @@
 using Entities.RequestParameters;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
+using StoreApp.Models;
 
 namespace StoreApp.Controllers;
 
@@ -15,9 +16,21 @@ public class ProductController : Controller
 
 	public IActionResult Index(ProductRequestParameters p)
 	{
-		var model = _manager.PorductService.GetAllProductsWithDetails(p);
+		var products = _manager.PorductService.GetAllProductsWithDetails(p);
+		
+		var pagination = new Pagination()
+		{
+			CurrentPage = p.PageNumber,
+			ItemsPerPage = p.PageSize,
+			// TotalItems = products.Count(),
+			TotalItems = _manager.PorductService.GetAllProducts(false).Count()
+		};
 
-		return View(model);
+		return View(new ProductListViewModel()
+		{
+			Products = products,
+			Pagination = pagination
+		});
 	}
 
 	// public IActionResult Get([FromForm(Name = "id")] int id)

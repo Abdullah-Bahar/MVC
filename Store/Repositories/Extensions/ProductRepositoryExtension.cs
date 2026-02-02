@@ -19,7 +19,8 @@ public static class ProductRepositoryExtension
 		}
 	}
 
-	public static IQueryable<Product> FilterBySearchTerm(this IQueryable<Product> products, String? searchTerm)
+	public static IQueryable<Product> FilterBySearchTerm(this IQueryable<Product> products,
+		String? searchTerm)
 	{
 		if (string.IsNullOrWhiteSpace(searchTerm))
 		{
@@ -33,7 +34,8 @@ public static class ProductRepositoryExtension
 		}
 	}
 
-	public static IQueryable<Product> FilterByPrice(this IQueryable<Product> products, int minPrice, int maxPrice, bool isValidPrice)
+	public static IQueryable<Product> FilterByPrice(this IQueryable<Product> products,
+		int minPrice, int maxPrice, bool isValidPrice)
 	{
 		if (isValidPrice)
 		{
@@ -43,5 +45,13 @@ public static class ProductRepositoryExtension
 		{
 			return products;
 		}
+	}
+
+	public static IQueryable<Product> ToPaginate(this IQueryable<Product> products,
+		int pageNumber, int pageSize)
+	{
+		return products
+			.Skip((pageNumber - 1) * pageSize) // Bu kadar veriyi atla
+			.Take(pageSize);
 	}
 }
