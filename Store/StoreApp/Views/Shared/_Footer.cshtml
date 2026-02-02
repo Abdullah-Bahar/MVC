@@ -1,16 +1,42 @@
-<div class="bg-light border-top p-3">
+<div class="bg-dark border-top p-3 mt-5">
 	<div class="container">
 		<div class="row">
 
-			<div class="col-md-2">
-				2
+			<div class="col-md-2 my-3">
+				<div class="lead text-center text-light">
+					<i class="fa-solid fa-store display-6"></i>
+					<br />
+					Store App
+				</div>
 			</div>
 
-			<div class="col-md-8">
-				8
+			<div class="col-md-8 my-3">
+				<div class="text-center text-light mb-3">
+					&copy; 2077 <br /> Welcome To ASP.NET Core MVC Eğitimi
+				</div>
+
+				<div class="text-center">
+					<div class="btn-group">
+						<a href="#!" class="btn btn-secondary">
+							<i class="fa-brands fa-facebook"></i>
+						</a>
+						<a href="#!" class="btn btn-secondary">
+							<i class="fa-brands fa-twitter"></i>
+						</a>
+						<a href="#!" class="btn btn-secondary">
+							<i class="fa-brands fa-linkedin"></i>
+						</a>
+						<a href="#!" class="btn btn-secondary">
+							<i class="fa-brands fa-youtube"></i>
+						</a>
+						<a href="#!" class="btn btn-secondary">
+							<i class="fa-brands fa-instagram"></i>
+						</a>
+					</div>
+				</div>
 			</div>
 
-			<div class="col-md-2">
+			<div class="col-md-2 my-3">
 
 				<!-- Tag Helper kullanılmadan önceki hali -->
 				@* <div class="my-3">
@@ -47,8 +73,12 @@
 					</ul>
 				</div> *@
 
-				<div products number-product="6"></div>
-
+				<div products number-product="6" 
+					header-css-class="text-white" 
+					ul-css-class="list-group"
+					li-css-class="list-group-item bg-secondary"
+					a-css-class="btn text-white">
+				</div>
 			</div>
 
 		</div>

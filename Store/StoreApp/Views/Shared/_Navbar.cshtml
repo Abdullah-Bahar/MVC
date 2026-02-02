@@ -1,23 +1,31 @@
-<nav class="navbar navbar-expand-lg bg-dark border-bottom">
-	<div class="container-fluid">
-		<a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">Store App</a>
-		<button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-			aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg bg-secondary border-bottom">
+	<div class="container">
+		<a class="navbar-brand me-0" href="/">
+			<i class="fa-solid fa-store fa-2x text-dark"></i>
+		</a>
+		<a class="navbar-brand text-dark" asp-controller="Home" asp-action="Index">Store App</a>
+		<button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse"
+			data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a class="nav-link text-light active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
-				<a class="nav-link text-light" aria-current="page" asp-controller="Product" asp-action="Index">Products (@await Component.InvokeAsync("ProductSummary"))</a>
-				<a class="nav-link text-light" aria-current="page" asp-controller="Category" asp-action="Index">Category</a>
+				<a class="nav-link text-light active" aria-current="page" asp-controller="Home"
+					asp-action="Index">Home</a>
+				<a class="nav-link text-light" aria-current="page" asp-controller="Product" asp-action="Index">Products
+					(@await Component.InvokeAsync("ProductSummary"))</a>
+				<a class="nav-link text-light" aria-current="page" asp-controller="Category"
+					asp-action="Index">Category</a>
 				<a class="nav-link text-light" aria-current="page" asp-page="/Contact/Contact">Contact</a>
 			</div>
 			<div class="navbar-nav">
 				<a class="nav-link text-light" aria-current="page" asp-page="/CartPage/Cart">
-				<i class="fa-solid fa-cart-shopping"></i>
+					<i class="fa-solid fa-cart-shopping"></i>
 					Cart (@await Component.InvokeAsync("CartSummary"))
 				</a>
-				<a class="nav-link text-light" aria-current="page" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin</a>
+				<a class="nav-link text-light" aria-current="page" asp-area="Admin" asp-controller="Dashboard"
+					asp-action="Index">Admin</a>
 			</div>
 		</div>
 	</div>

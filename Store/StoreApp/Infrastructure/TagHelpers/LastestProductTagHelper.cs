@@ -11,6 +11,12 @@ public class LastestProductTagHelper : TagHelper
 	
 	[HtmlAttributeName("number-product")]
 	public int NumberProduct { get; set; }
+	
+	// İsimler eşleşeceği için otomatik bind edilir.
+	public string HeaderCssClass { get; set; } = String.Empty;
+	public string ulCssClass { get; set; } = String.Empty;
+	public string liCssClass { get; set; } = String.Empty;
+	public string aCssClass { get; set; } = String.Empty;
 
 	public LastestProductTagHelper(IServiceManager manager)
 	{
@@ -25,7 +31,7 @@ public class LastestProductTagHelper : TagHelper
 
 		// h6
 		TagBuilder h6 = new TagBuilder("h6");
-		h6.Attributes.Add("class", "lead");
+		h6.Attributes.Add("class", $"lead {HeaderCssClass}");
 
 		// icon
 		TagBuilder i = new TagBuilder("i");
@@ -36,16 +42,19 @@ public class LastestProductTagHelper : TagHelper
 
 		// ul
 		TagBuilder ul = new TagBuilder("ul");
+		ul.AddCssClass($"{ulCssClass}");
 		var products = _manager.PorductService.GetLastestProducts(NumberProduct, false);
 		
 		// li & a
 		foreach (var product in products)
 		{
 			TagBuilder li = new TagBuilder("li");
-			TagBuilder a = new TagBuilder("a");
+			li.AddCssClass($"{liCssClass}");
 
+			TagBuilder a = new TagBuilder("a");
 			a.InnerHtml.AppendHtml(product.ProductName);
 			a.Attributes.Add("href", $"/product/get/{product.ProductId}");
+			a.AddCssClass($"{aCssClass}");
 			
 			/* 
 				- Bu şekilde link çalışmaz
