@@ -46,6 +46,14 @@ public class ProductManager : IProductService
 		return _manager.Product.GetAllProductsWithDetails(p);
 	}
 
+	public IEnumerable<Product> GetLastestProducts(int n, bool trackChange)
+	{
+		return _manager.Product
+					.FindAll(trackChange)
+					.OrderByDescending(prd => prd.ProductId)
+					.Take(n);
+	}
+
 	public Product? GetOneProduct(int id, bool trackChange)
 	{
 		var product = _manager.Product.GetOneProduct(id, trackChange);
