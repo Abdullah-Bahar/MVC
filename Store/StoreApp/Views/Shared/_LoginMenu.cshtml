@@ -1,0 +1,22 @@
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+	// Kullanıcı admin ise admin paneline gidebilsin
+	<a class="nav-link text-light" aria-current="page" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+		Admin
+	</a>
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+	<a class="nav-link text-light" aria-current="page" asp-area="" asp-controller="Account" asp-action="Logout"
+	asp-route-returnUrl="@Context.Request.PathAndQuery()">
+		Logout
+	</a>
+}
+else
+{
+	<a class="nav-link text-light" aria-current="page" asp-area="" asp-controller="Account" asp-action="Login"
+	asp-route-returnUrl="@Context.Request.PathAndQuery()">
+		Login
+	</a>
+}

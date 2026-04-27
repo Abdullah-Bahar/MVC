@@ -47,6 +47,11 @@ app.UseHttpsRedirection();
 // MapControllerRoute() ile tanımlanan routing işlemlerinin dikkate alınmasını sağlar
 app.UseRouting();
 
+// Microsoft Önerisi : 
+// Authentication ve Authorization middleware'leri UseRouting()'den sonra, UseEndpoints()'den önce eklenmelidir. 
+app.UseAuthentication(); // Authentication mekanizması eklendi
+app.UseAuthorization(); // Authorization mekanizması eklendi
+
 // Aşağıdaki kullanım .net6 öncesi için. Hala çalışır ama önerilmez.
 // app.UseEndpoints( e => { ... });
 
