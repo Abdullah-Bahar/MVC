@@ -28,6 +28,9 @@ builder.Services.ConfigureServiceRegistration();
 // Routing Extension metodu ile kaydedildi
 builder.Services.ConfigureRouting();
 
+builder.Services.ConfigureApplicationCookie();
+
+
 // AutoMapper DI'a kaydedilir
 // Program.cs dosyasının bulunduğu assembly’i referans al ve bu assembly'de 
 // Profile'dan türeyen tüm sınıflar bul. (Dinamik yapı)

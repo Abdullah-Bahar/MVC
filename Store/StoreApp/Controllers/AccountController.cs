@@ -92,4 +92,9 @@ public class AccountController : Controller
 
 		return View(model);
 	}
+
+	public IActionResult AccessDenied([FromQuery(Name = "ReturnUtl")] string returnUrl)
+	{
+		return View();
+	}
 }
