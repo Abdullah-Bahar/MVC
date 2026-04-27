@@ -2,10 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Entities.Models;
 using Repositories.Config;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Repositories.Models;
 
-public class RepositoryContext : DbContext
+public class RepositoryContext : IdentityDbContext<IdentityUser>
 {
 	public RepositoryContext(DbContextOptions<RepositoryContext> options)
 		: base(options)

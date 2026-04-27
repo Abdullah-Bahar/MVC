@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Models;
 
@@ -79,8 +80,62 @@ public static class ApplicationExtension
 			// İstenildiği takdirde pek çok dil eklenebilir.
 
 			options.AddSupportedCultures("tr-TR")       // Veri formatlama culture
-	   			.AddSupportedUICultures("tr-TR")     // UI culture
-	   			.SetDefaultCulture("tr-TR");         // Default cultureF
+				.AddSupportedUICultures("tr-TR")     // UI culture
+				.SetDefaultCulture("tr-TR");         // Default cultureF
 		});
+	}
+
+	public static async void ConfigureDefaultAdminUser(this IApplicationBuilder app)
+	{
+		// Uygulama ayağa kalkarken default admin kullanıcısı oluşturulsun.
+
+		const string adminUser = "admin";
+		const string adminPassword = "admin+123456";
+
+		// Usermanager ve RoleManager servislerini kullanabilmek için manuel scope açılır.
+		UserManager<IdentityUser> userManager = app
+			.ApplicationServices
+			.CreateScope()
+			.ServiceProvider
+			.GetRequiredService<UserManager<IdentityUser>>();
+
+		RoleManager<IdentityRole> roleManager = app
+			.ApplicationServices
+			.CreateScope()
+			.ServiceProvider
+			.GetRequiredService<RoleManager<IdentityRole>>();
+
+		IdentityUser user = await userManager.FindByNameAsync(adminUser);
+
+		if (user == null)
+		{
+			user = new IdentityUser()
+			{
+				Email = "admin@example.com",
+				UserName = adminUser,
+				PhoneNumber = "0123456789",
+				// Diğer özellikler istenirse eklenebilir
+			};
+
+			var result = await userManager.CreateAsync(user, adminPassword);
+
+			if (!result.Succeeded)
+			{
+				throw new Exception("Admin kullanıcısı oluşturulurken bir hata oluştu. HATA!");
+			}
+
+			var roleResult = await userManager.AddToRolesAsync(user,
+				roleManager
+					.Roles
+					.Select(r => r.Name)
+					.ToList()
+			);
+
+			if (!roleResult.Succeeded)
+			{
+				throw new Exception("Admin kullanıcısına roller atanırken bir hata oluştu. HATA!");
+			}
+		}
+
 	}
 }

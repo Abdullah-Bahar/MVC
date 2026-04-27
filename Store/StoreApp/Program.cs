@@ -13,6 +13,9 @@ builder.Services.AddRazorPages(); // Uygulamaya Razor Page'ler de eklendi.
 // DbContext Extentsion metodu ile kaydedildi
 builder.Services.ConfigureDbContext(builder.Configuration);
 
+// Identity Extension metodu ile kaydedildi
+builder.Services.ConfigureIdentity();
+
 // Session Extension metodu ile kaydedildi
 builder.Services.ConfigureSession();
 
@@ -65,5 +68,8 @@ app.ConfigureAndCheckMigration();
 
 // Uygulama için lokalizasyon ayarları yapılır - Dil ayarları (Genişletilmiş method)
 app.ConfigureLocalization();
+
+// Uygulama başlatılırken default admin kullanıcısı oluşturulsun (Genişletilmiş method)
+app.ConfigureDefaultAdminUser();
 
 app.Run();

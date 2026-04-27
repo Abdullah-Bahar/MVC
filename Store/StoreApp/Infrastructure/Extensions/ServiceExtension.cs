@@ -1,4 +1,5 @@
 using Entities.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Contracts;
@@ -23,7 +24,27 @@ public static class ServiceExtension
 			// * Aşağıdaki configuration ile Migration/ klasörü DbContext'in olduğu yer yerine 
 			// StoreApp projesi içerisinde oluşturulur. 
 			b => b.MigrationsAssembly("StoreApp"));
+
+			// EF Core loglarında parametre değerlerini de gösterir
+			// dev açamasında logları kontrol etmek için açtık
+			// prod'a çıktığında kapatılmalı (hassas bilgiler mevcut)
+			options.EnableSensitiveDataLogging(true);
 		});
+	}
+
+	public static void ConfigureIdentity(this IServiceCollection services)
+	{
+		services.AddIdentity<IdentityUser, IdentityRole>(options =>
+		{
+			options.SignIn.RequireConfirmedEmail = false;
+			options.User.RequireUniqueEmail = true;
+			options.Password.RequireUppercase = false;
+			options.Password.RequireLowercase = false;
+			options.Password.RequireDigit = false;
+			options.Password.RequiredLength = 6;
+		})
+		// Kullanıcıları veritabanında RepositoryContext üzerinden sakla
+		.AddEntityFrameworkStores<RepositoryContext>();
 	}
 
 	public static void ConfigureSession(this IServiceCollection services)
