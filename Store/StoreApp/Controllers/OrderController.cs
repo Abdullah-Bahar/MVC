@@ -1,4 +1,5 @@
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 
@@ -16,6 +17,7 @@ public class OrderController : Controller
 	}
 
 	// Order nesnesi gönderilmese de çalışmakta. Lakin gönderilmesi Best Practice
+	[Authorize]	
 	public ViewResult Checkout() => View(new Order());
 
 	[HttpPost]

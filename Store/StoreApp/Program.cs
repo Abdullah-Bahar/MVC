@@ -49,8 +49,8 @@ app.UseRouting();
 
 // Microsoft Önerisi : 
 // Authentication ve Authorization middleware'leri UseRouting()'den sonra, UseEndpoints()'den önce eklenmelidir. 
-app.UseAuthentication(); // Authentication mekanizması eklendi
-app.UseAuthorization(); // Authorization mekanizması eklendi
+app.UseAuthentication(); // Authentication mekanizması eklendi (önce)
+app.UseAuthorization(); // Authorization mekanizması eklendi (sonra)
 
 // Aşağıdaki kullanım .net6 öncesi için. Hala çalışır ama önerilmez.
 // app.UseEndpoints( e => { ... });
