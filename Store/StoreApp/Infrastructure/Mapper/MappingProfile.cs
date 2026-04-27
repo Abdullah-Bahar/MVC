@@ -21,5 +21,6 @@ public class MappingProfile : Profile
 		CreateMap<ProductDtoForInsertion, Product>();
 		CreateMap<ProductDtoForUpdate, Product>().ReverseMap(); // Çift yönkü map'leme
 		CreateMap<UserDtoForCreation, IdentityUser>();
+		CreateMap<UserDtoForUpdate, IdentityUser>().ReverseMap();
 	}
 }
