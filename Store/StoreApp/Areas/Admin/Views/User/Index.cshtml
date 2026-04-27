@@ -5,6 +5,13 @@
 		Users
 	</div>
 
+	<div class="d-flex justify-content-end">
+		<a asp-action="Create" class="btn btn-outline-success">
+			<i class="fa fa-solid fa-plus"></i>
+			Add User
+		</a>
+	</div>
+
 	<table class="w-100">
 		<thead>
 			<tr>
@@ -23,10 +30,10 @@
 					<td>-</td>
 					<td>
 						<div class="btn-group">
-							<a class="btn btn-sm btn-warning">
+							<a asp-action="Update" asp-route-id="@user.UserName" class="btn btn-sm btn-warning">
 								Edit
 							</a>
-							<a class="btn btn-sm btn-info">
+							<a asp-action="ResetPassword" asp-route-id="@user.UserName" class="btn btn-sm btn-info">
 								Reset Password
 							</a>
 							<a class="btn btn-sm btn-danger">
