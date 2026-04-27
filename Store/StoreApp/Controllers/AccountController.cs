@@ -55,4 +55,41 @@ public class AccountController : Controller
 		return Redirect(returnUrl);
 	}
 
+	public IActionResult Register()
+	{
+		return View();
+	}
+
+	[HttpPost]
+	[ValidateAntiForgeryToken]
+	public async Task<IActionResult> Register([FromForm] RegisterDto model)
+	{
+
+		var user = new IdentityUser()
+		{
+			UserName = model.UserName,
+			Email = model.Email
+		};
+
+		var result = await _userManager.CreateAsync(user, model.Password);
+
+		if (result.Succeeded)
+		{
+			var roleResult = await _userManager.AddToRoleAsync(user, "User");
+
+			if (roleResult.Succeeded)
+			{
+				return RedirectToAction("Login", new { returnUrl = "/" });
+			}
+		}
+		else
+		{
+			foreach (var error in result.Errors)
+			{
+				ModelState.AddModelError("Error", error.Description);
+			}
+		}
+
+		return View(model);
+	}
 }
