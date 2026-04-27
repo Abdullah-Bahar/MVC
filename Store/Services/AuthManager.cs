@@ -48,6 +48,12 @@ public class AuthManager : IAuthService
 		return result;
 	}
 
+	public async Task<IdentityResult> DeleteOneUser(string userName)
+	{
+		var user = await GetOneUser(userName);
+		return await _userManager.DeleteAsync(user);
+	}
+
 	public IEnumerable<IdentityUser> GetAllUsers()
 	{
 		return _userManager.Users.ToList();
@@ -55,36 +61,36 @@ public class AuthManager : IAuthService
 
 	public async Task<IdentityUser> GetOneUser(string userName)
 	{
-		return await _userManager.FindByNameAsync(userName);
+		var user = await _userManager.FindByNameAsync(userName);
+
+		if (user is not null)
+		{
+			return user;
+		}
+		else
+		{
+			throw new Exception("user bulunamadı");
+		}
 	}
 
 	public async Task<UserDtoForUpdate> GetOneUserForUpdate(string userName)
 	{
 		var user = await GetOneUser(userName);
-		if (user != null)
-		{
-			var userDto = _mapper.Map<UserDtoForUpdate>(user);
-			userDto.Roles = new HashSet<string>(Roles.Select(r => r.Name).ToList());
-			userDto.UserRoles = new HashSet<string>(await _userManager.GetRolesAsync(user));
-			return userDto;
-		}
+		var userDto = _mapper.Map<UserDtoForUpdate>(user);
+		userDto.Roles = new HashSet<string>(Roles.Select(r => r.Name).ToList());
+		userDto.UserRoles = new HashSet<string>(await _userManager.GetRolesAsync(user));
 
-		throw new Exception("Error fışkırdı");
+		return userDto;
 	}
 
 	public async Task<IdentityResult> ResetPassword(ResetPasswordDto model)
 	{
 		var user = await GetOneUser(model.UserName);
 
-		if (user is not null)
-		{
-			await _userManager.RemovePasswordAsync(user);
-			var result = await _userManager.AddPasswordAsync(user, model.Password);
-		
-			return result;
-		}
+		await _userManager.RemovePasswordAsync(user);
+		var result = await _userManager.AddPasswordAsync(user, model.Password);
 
-		throw new Exception("User na mevcut");
+		return result;
 	}
 
 	public async Task Update(UserDtoForUpdate userDto)
@@ -93,20 +99,15 @@ public class AuthManager : IAuthService
 		user.PhoneNumber = userDto.PhoneNumber;
 		user.Email = userDto.Email;
 
-		if (user != null)
+		var result = await _userManager.UpdateAsync(user);
+
+		if (userDto.Roles.Count > 0)
 		{
-			var result = await _userManager.UpdateAsync(user);
-
-			if (userDto.Roles.Count > 0)
-			{
-				var userRoles = await _userManager.GetRolesAsync(user);
-				var r1 = await _userManager.RemoveFromRolesAsync(user, userRoles);
-				var r2 = await _userManager.AddToRolesAsync(user, userDto.Roles);
-			}
-
-			return;
+			var userRoles = await _userManager.GetRolesAsync(user);
+			var r1 = await _userManager.RemoveFromRolesAsync(user, userRoles);
+			var r2 = await _userManager.AddToRolesAsync(user, userDto.Roles);
 		}
 
-		throw new Exception("user güncellenirken canı güncellenmek istememiş");
+		return;
 	}
 }

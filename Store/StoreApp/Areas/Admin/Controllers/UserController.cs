@@ -80,4 +80,15 @@ public class UserController : Controller
 			? RedirectToAction("Index")
 			: View();
 	}
+
+	[HttpPost]
+	[ValidateAntiForgeryToken]
+	public async Task<IActionResult> DeleteOneUser([FromForm] UserDto userDto)
+	{
+		var result = await _manager.AuthService.DeleteOneUser(userDto.UserName);
+
+		return result.Succeeded
+			? RedirectToAction("Index")
+			: View();
+	}
 }
