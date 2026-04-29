@@ -2,7 +2,10 @@ using StoreApp.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddControllers(); // => API ile çalışılacaksa bu kullanılır
+builder.Services.AddControllers() // => API ile çalışılacaksa bu kullanılır
+	.AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
+	// Sistem normalde API'leri ana proje içerisinde arar.
+	// Ancak API'ler Presentation içerisinde olduğu için oranın referansını verdik.
 
 // Servis kaydı yapılıyor
 // Servis kayıtları Middleware yapılarıyla birlikte kullanılabilir
@@ -70,6 +73,8 @@ app.MapControllerRoute(
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages(); // Razor page için Route mekanizması eklendi
+
+app.MapControllers(); // API'ler için Route mekanizması eklendi
 
 // Uygulama başlatılırken migration'lar kontrol edilsin ve varsa uygulansın (Genişletilmiş method)
 app.ConfigureAndCheckMigration();
