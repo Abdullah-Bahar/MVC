@@ -34,18 +34,18 @@
 					<td>@product.Price.ToString("c")</td>
 					<td>
 						<div class="btn-group">
-							<a class="btn btn-warning" asp-action="Update" asp-route-id="@product.ProductId">
+							<a class="btn btn-warning" asp-action="Update" asp-route-id="@product.ProductId"
+							data-toogle="tooltip" placement="top" title="Edit">
 								<i class="fa fa-edit"></i>
-								Edit
 							</a>
 							<a class="btn btn-info" target="_blank" asp-area="" asp-controller="Product" asp-action="Get"
-								asp-route-id="@product.ProductId">
+								asp-route-id="@product.ProductId"
+								data-toogle="tooltip" placement="top" title="Info">
 								<i class="fa fa-search"></i>
-								Info
 							</a>
-							<a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.ProductId">
+							<a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.ProductId"
+							data-toogle="tooltip" placement="top" title="Delete">
 								<i class="fa fa-trash"></i>
-								Delete
 							</a>
 						</div>
 					</td>
@@ -54,3 +54,11 @@
 		</tbody>
 	</table>
 </div>
+
+@section Scripts {
+	<script type="text/javascript">
+		$(document).ready(() => {
+			$('[data-toogle="tooltip"]').tooltip();
+		});
+	</script>
+}
