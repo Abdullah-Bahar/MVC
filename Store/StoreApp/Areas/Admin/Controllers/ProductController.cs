@@ -23,7 +23,7 @@ public class ProductController : Controller
 	public IActionResult Index([FromQuery] ProductRequestParameters p)
 	{
 		var products = _manager.PorductService.GetAllProductsWithDetails(p);
-		
+
 		var pagination = new Pagination()
 		{
 			CurrentPage = p.PageNumber,
@@ -47,18 +47,18 @@ public class ProductController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	public async Task<IActionResult> Create([FromForm] ProductDtoForInsertion productDto, 
+	public async Task<IActionResult> Create([FromForm] ProductDtoForInsertion productDto,
 		[FromForm] IFormFile file) // ilgili input alanındaki name file olduğu için .NET Model Binding işlemini gerçekleştirir.
 	{
 		if (ModelState.IsValid)
 		{
 			// file operation
-			string path = Path.Combine(				// Path.Combine() işletim sistemlerin kullanılan farklı ayraçlara ("/", "\") göre path'i birleştirir.
-				Directory.GetCurrentDirectory(),	// Projenin çalıştığı kök dizin (“Bu uygulama nerede çalışıyor?”)
+			string path = Path.Combine(             // Path.Combine() işletim sistemlerin kullanılan farklı ayraçlara ("/", "\") göre path'i birleştirir.
+				Directory.GetCurrentDirectory(),    // Projenin çalıştığı kök dizin (“Bu uygulama nerede çalışıyor?”)
 				"wwwroot", "image", file.FileName); // "wwwroot/image/filename"
 
 			// using => Maliyeti yüksek, kaynak gerektiren işlemler için kullanılır (Kullan ve imha et)
-			using (var stream = new FileStream(path, FileMode.Create)) 
+			using (var stream = new FileStream(path, FileMode.Create))
 			{
 				// ilgli path'te bir dosya oluşturulur ve parametre olarak gelen dosyayı oraya kopyalar 
 				await file.CopyToAsync(stream);
@@ -72,6 +72,7 @@ public class ProductController : Controller
 			productDto.ImageUrl = String.Concat("/image/", file.FileName);
 
 			_manager.PorductService.CreateOneProduct(productDto);
+			TempData["success"] = $"{productDto.ProductName} oluşturuldu.";
 			return RedirectToAction("Index");
 		}
 
@@ -116,6 +117,7 @@ public class ProductController : Controller
 	public IActionResult Delete([FromRoute(Name = "id")] int id)
 	{
 		_manager.PorductService.DeleteOneProduct(id);
+		TempData["danger"] = "Ürün başarılı bir şekilde silinir gibi yapıldı";
 		return RedirectToAction("Index");
 	}
 

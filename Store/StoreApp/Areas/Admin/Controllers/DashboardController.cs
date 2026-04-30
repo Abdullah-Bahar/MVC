@@ -9,6 +9,7 @@ public class DashboardController : Controller
 {
 	public IActionResult Index()
 	{
+		TempData["info"] = $"Tekrar Hoşgeldin, {DateTime.Now.ToShortDateString()}";
 		return View();
 	}
 }
