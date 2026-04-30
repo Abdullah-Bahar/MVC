@@ -11,10 +11,12 @@ public class ShowcaseViewComponent : ViewComponent
 	{
 		_manager = manager;
 	}
-	
-	public IViewComponentResult Invoke()
+
+	public IViewComponentResult Invoke(string page = "default")
 	{
 		var products = _manager.PorductService.GetShowcaseProducts(false);
-		return View(products);
+		return page.Equals("default")
+			? View(products)
+			: View("List", products);
 	}
 }
