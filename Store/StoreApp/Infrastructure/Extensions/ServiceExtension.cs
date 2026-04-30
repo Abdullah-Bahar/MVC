@@ -19,7 +19,7 @@ public static class ServiceExtension
 		services.AddDbContext<RepositoryContext>(options =>
 		{
 			// appsettings.json içinden gelen connection string
-			options.UseSqlite(configuration.GetConnectionString("sqlconnection"),
+			options.UseSqlServer(configuration.GetConnectionString("mssqlconnection"),
 
 			// * EFCore default olarak migration klasörünü DBContext'in olduğu yerde açar.
 			// * Aşağıdaki configuration ile Migration/ klasörü DbContext'in olduğu yer yerine 
