@@ -1,9 +1,11 @@
 using Entities.DTOs;
 using Entities.Models;
+using Entities.RequestParameters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Contracts;
+using StoreApp.Models;
 
 namespace StoreApp.Areas.Admin.Controllers;
 
@@ -18,10 +20,23 @@ public class ProductController : Controller
 		_manager = manager;
 	}
 
-	public IActionResult Index()
+	public IActionResult Index([FromQuery] ProductRequestParameters p)
 	{
-		var models = _manager.PorductService.GetAllProducts(false);
-		return View(models);
+		var products = _manager.PorductService.GetAllProductsWithDetails(p);
+		
+		var pagination = new Pagination()
+		{
+			CurrentPage = p.PageNumber,
+			ItemsPerPage = p.PageSize,
+			// TotalItems = products.Count(),
+			TotalItems = _manager.PorductService.GetAllProducts(false).Count()
+		};
+
+		return View(new ProductListViewModel()
+		{
+			Products = products,
+			Pagination = pagination
+		});
 	}
 
 	public IActionResult Create()
